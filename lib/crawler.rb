@@ -2,7 +2,7 @@ require 'open-uri'
 require 'nokogiri'
 
 class Crawler
-	attr_reader :seeds, :urls, :keywords
+	attr_reader :seeds, :urls, :keywords, :paragraph
 
 	def initialize(seeds)
 		@seeds = seeds
@@ -10,16 +10,16 @@ class Crawler
 
 	def fetch_data
 		@seeds.each do |seed|
-			@urls = fetch_urls(seed)
-			@keywords = fetch_keywords(seed)
+			checked_seed = check_url_or_file(seed)
+			@urls = fetch_urls(checked_seed)
+			@keywords = fetch_keywords(checked_seed)
+			@paragraph = fetch_paragraphs(checked_seed)
 		end
 	end
 
 	def fetch_urls(seed)
 		urls = []
-		checked_seed = check_url_or_file(seed)
-
-		seed_urls_nodeset = checked_seed.xpath('//a')
+		seed_urls_nodeset = seed.xpath('//a')
 		seed_urls_nodeset.each do |node|
 			urls << node.first[1] if node.first[1].include?('http://')
 		end
@@ -27,9 +27,18 @@ class Crawler
 	end
 
 	def fetch_keywords(seed)
-			checked_seed = check_url_or_file(seed)
-			seed_keys_nodeset = checked_seed.xpath('//meta')
-			get_keywords_from_nodeset(seed_keys_nodeset)
+		seed_keys_nodeset = seed.xpath('//meta')
+		get_keywords_from_nodeset(seed_keys_nodeset)
+	end
+
+	def fetch_paragraphs(seed)
+		paragraphs = []
+		seed_paragraph_nodeset = seed.xpath('//p')
+		seed_paragraph_nodeset.each do |node|
+			p node.text
+			paragraphs << node.text
+		end
+		return paragraphs.join("")
 	end
 
 	private
@@ -52,7 +61,3 @@ class Crawler
 			end
 	end
 end
-
-crawler = Crawler.new(['http://www.bbc.co.uk'])
-crawler.fetch_data
-puts crawler.urls
