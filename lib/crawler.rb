@@ -21,13 +21,7 @@ class Crawler
 			text = fetch_paragraphs(checked_seed)
 						
 			seed_data = SeedData.new(urls, keywords, description, headers, text)
-			p seed_data
-		end
-	end
-
-	def store_in_csv(seed)
-		csv_row = CSV.open("seeddata.csv", "w") do |row|
-			row << [@urls, @keywords, @description, @text]
+			seed_data.store_in_csv
 		end
 	end
 
@@ -95,5 +89,5 @@ class Crawler
 	end
 end
 
-crawler = Crawler.new(['http://www.bbc.co.uk'])
+crawler = Crawler.new(['http://www.bbc.co.uk', 'http://www.makersacademy.com'])
 crawler.fetch_data

@@ -10,5 +10,10 @@ class SeedData
 		@text = text
 	end
 
+	def store_in_csv(csv_file = 'seeddata.csv')
+		csv_row = CSV.open(csv_file, 'ab') do |row|
+			row << [@urls, @keywords, @description, @text]
+		end
+	end
 
 end
