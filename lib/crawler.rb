@@ -2,7 +2,7 @@ require 'open-uri'
 require 'nokogiri'
 
 class Crawler
-	attr_reader :seeds, :urls, :keywords, :paragraph
+	attr_reader :seeds, :urls, :keywords, :paragraph, :description
 
 	def initialize(seeds)
 		@seeds = seeds
@@ -14,6 +14,7 @@ class Crawler
 			@urls = fetch_urls(checked_seed)
 			@keywords = fetch_keywords(checked_seed)
 			@paragraph = fetch_paragraphs(checked_seed)
+			@description = fetch_description(checked_seed)
 		end
 	end
 
@@ -31,11 +32,16 @@ class Crawler
 		get_keywords_from_nodeset(seed_keys_nodeset)
 	end
 
+	def fetch_description(seed)
+		seed_keys_nodeset = seed.xpath('//meta')
+		get_description_from_nodeset(seed_keys_nodeset)
+	end
+
 	def fetch_paragraphs(seed)
 		paragraphs = []
 		seed_paragraph_nodeset = seed.xpath('//p')
 		seed_paragraph_nodeset.each do |node|
-			p node.text
+			# p node.text
 			paragraphs << node.text
 		end
 		return paragraphs.join("")
@@ -54,10 +60,19 @@ class Crawler
 
 	def get_keywords_from_nodeset(nodeset)
 		nodeset.each do |node|
-				next unless node.attributes['name']
-					if node.attributes['name'].value == 'keywords'
-						return keywords = node.attributes['content'].value.split(/\s*,\s*/)
+			next unless node.attributes['name']
+				if node.attributes['name'].value == 'keywords'
+					return keywords = node.attributes['content'].value.split(/\s*,\s*/)
 				end
-			end
+		end
+	end
+
+	def get_description_from_nodeset(nodeset)
+		nodeset.each do |node|
+			next unless node.attributes['name']
+				if node.attributes['name'].value == 'description'
+					return description = node.attributes['content'].value
+				end
+		end
 	end
 end
