@@ -4,7 +4,7 @@ require 'csv'
 require_relative 'seed_data'
 
 class Crawler
-	attr_reader :seeds, :urls, :keywords, :text, :description
+	attr_reader :seeds 
 
 	def initialize(seeds)
 		@seeds = seeds
@@ -17,9 +17,10 @@ class Crawler
 			urls = fetch_urls(checked_seed)
 			keywords = fetch_metadata('keywords', checked_seed)
 			description = fetch_metadata('description',checked_seed)
+			headers = fetch_headers(checked_seed)
 			text = fetch_paragraphs(checked_seed)
-			
-			seed_data = SeedData.new(urls, keywords, description, text)
+						
+			seed_data = SeedData.new(urls, keywords, description, headers, text)
 			p seed_data
 		end
 	end
@@ -55,6 +56,15 @@ class Crawler
 		return full_text.split.join(" ")
 	end
 
+	def fetch_headers(seed)
+		headers = []
+		headers_tags = (1..6).map { |num| "h#{num}"}
+		headers_tags.each do |header_tag|
+			headers << get_header_from_tag(seed, header_tag)
+		end
+		return headers.flatten
+	end
+
 	private
 
 	def check_url_or_file(seed)
@@ -73,6 +83,15 @@ class Crawler
 		 	output = output.split(/\s*,\s*/) if attribute == 'keywords'
 			return output if node.attributes['name'].value == attribute
 		end
+	end
+
+	def get_header_from_tag(seed , header_tag)
+		headers_from_one_tag = []
+		headers_from_nodeset = seed.xpath("//#{header_tag}")
+		headers_from_nodeset.each do |node|
+			headers_from_one_tag << node.text
+		end
+		return headers_from_one_tag
 	end
 end
 
