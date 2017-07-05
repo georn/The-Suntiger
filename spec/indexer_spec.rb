@@ -18,8 +18,8 @@ describe PageIndexer do
     expect(indexer.indexing(content)).to eq({"flitting"=>1, "raven"=>2, "sitting"=>2})
   end
 
-  xit "excludes stop words from content" do
+  it "indexes pages content by counting frequency of words with stop words excluded" do
     content = "and the raven raven never flitting still is sitting still is never sitting"
-    expect(indexer.exclude_stopwords(content)).to eq(["raven", "raven", "flitting", "sitting", "sitting"])
+    expect(indexer.indexing(content)).not_to include("never")
   end 
 end
