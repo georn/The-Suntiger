@@ -6,10 +6,10 @@ class PageIndexer
     @page_indexed = Hash.new(0)
   end
 
-  def page_indexing(content, keyword)
+  def indexing(content, keywords)
       content.split(/\W/).each do |word|
-        @page_indexed[word] += 1 if word == keyword
+        @page_indexed[word] += 1 if keywords.include?(word)
       end
-      return @page_indexed
+      return Hash[@page_indexed.sort]
   end
 end
