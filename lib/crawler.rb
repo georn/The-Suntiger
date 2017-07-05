@@ -1,5 +1,6 @@
 require 'open-uri'
 require 'nokogiri'
+require 'csv'
 
 class Crawler
 	attr_reader :seeds, :urls, :keywords, :text, :description
@@ -15,6 +16,13 @@ class Crawler
 			@keywords = fetch_metadata('keywords', checked_seed)
 			@description = fetch_metadata('description',checked_seed)
 			@text = fetch_paragraphs(checked_seed)
+			store_in_csv(seed)
+		end
+	end
+
+	def store_in_csv(seed)
+		csv_row = CSV.open("seeddata.csv", "w") do |row|
+			row << [@urls, @keywords, @description, @text]
 		end
 	end
 
@@ -33,14 +41,14 @@ class Crawler
 	end
 
 		def fetch_paragraphs(seed)
-		paragraphs = ""
+		full_text = ""
 		seed_paragraph_nodeset = seed.xpath('//p')
 		seed_paragraph_nodeset.each do |node|
 			raw_text = node.text.delete('^A-Za-z ')
 			raw_text.gsub!(/[\n,\t]/, " ") if raw_text.include?('\n')
-		paragraphs += "#{raw_text} "
+			full_text += "#{raw_text} "
 		end
-		return paragraphs.split.join(" ")
+		return full_text.split.join(" ")
 	end
 
 	private
@@ -64,8 +72,5 @@ class Crawler
 	end
 end
 
-crawler = Crawler.new(['http://bbc.co.uk'])
+crawler = Crawler.new(['http://www.bbc.co.uk'])
 crawler.fetch_data
-p crawler.keywords
-p crawler.urls
-p crawler.text
