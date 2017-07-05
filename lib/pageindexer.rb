@@ -1,4 +1,4 @@
-require_relative '../../stopwords.rb'
+require_relative '../stopwords.rb'
 
 class PageIndexer
   attr_reader :page_indexed
