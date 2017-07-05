@@ -8,4 +8,8 @@ describe PageIndexer do
   it "exists" do
     expect(indexer).to be_truthy
   end
+
+  it "it initializes with a new hash" do
+    expect(indexer.page_indexed).to be_empty
+  end 
 end
