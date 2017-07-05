@@ -1,3 +1,5 @@
+require_relative '../../stopwords.rb'
+
 class PageIndexer
 
   attr_reader :page_indexed
@@ -7,9 +9,17 @@ class PageIndexer
   end
 
   def indexing(content, keywords)
-      content.split(/\W/).each do |word|
+      exclude_stopwords(content).split(/\W/).each do |word|
         @page_indexed[word] += 1 if keywords.include?(word)
       end
       return Hash[@page_indexed.sort]
+  end
+
+private
+
+  def exclude_stopwords(content)
+    res = content.split(" ") - STOPWORDS
+    p res
+    return res.join(" ")
   end
 end
