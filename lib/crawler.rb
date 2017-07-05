@@ -1,6 +1,7 @@
 require 'open-uri'
 require 'nokogiri'
 require 'csv'
+require_relative 'seed_data'
 
 class Crawler
 	attr_reader :seeds, :urls, :keywords, :text, :description
@@ -12,11 +13,14 @@ class Crawler
 	def fetch_data
 		@seeds.each do |seed|
 			checked_seed = check_url_or_file(seed)
-			@urls = fetch_urls(checked_seed)
-			@keywords = fetch_metadata('keywords', checked_seed)
-			@description = fetch_metadata('description',checked_seed)
-			@text = fetch_paragraphs(checked_seed)
-			store_in_csv(seed)
+
+			urls = fetch_urls(checked_seed)
+			keywords = fetch_metadata('keywords', checked_seed)
+			description = fetch_metadata('description',checked_seed)
+			text = fetch_paragraphs(checked_seed)
+			
+			seed_data = SeedData.new(urls, keywords, description, text)
+			p seed_data
 		end
 	end
 
