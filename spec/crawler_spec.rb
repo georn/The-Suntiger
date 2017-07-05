@@ -32,4 +32,9 @@ describe Crawler do
     crawler.fetch_data
     expect(crawler.description).to eq("The best of the BBC, with the latest news and sport headlines, weather, TV & radio highlights and much more from across the whole of BBC Online")
   end
+
+  it "fetches the headers within a html document" do
+    crawler.fetch_data
+    expect(crawler.headers).to eq(['Links', 'Text', 'Some other header'])
+  end
 end
