@@ -2,7 +2,7 @@ require 'open-uri'
 require 'nokogiri'
 
 class Crawler
-	attr_reader :seeds, :urls, :keywords, :paragraph, :description
+	attr_reader :seeds, :urls, :keywords, :text, :description
 
 	def initialize(seeds)
 		@seeds = seeds
@@ -14,7 +14,7 @@ class Crawler
 			@urls = fetch_urls(checked_seed)
 			@keywords = fetch_metadata('keywords', checked_seed)
 			@description = fetch_metadata('description',checked_seed)
-			@paragraph = fetch_paragraphs(checked_seed)
+			@text = fetch_paragraphs(checked_seed)
 		end
 	end
 
@@ -36,8 +36,9 @@ class Crawler
 		paragraphs = ""
 		seed_paragraph_nodeset = seed.xpath('//p')
 		seed_paragraph_nodeset.each do |node|
-			raw_text = node.text.gsub!(/["\n","\t"]/, " ").delete('^A-Za-z ')
-			paragraphs += raw_text
+			raw_text = node.text.delete('^A-Za-z ')
+			raw_text.gsub!(/[\n,\t]/, " ") if raw_text.include?('\n')
+		paragraphs += "#{raw_text} "
 		end
 		return paragraphs.split.join(" ")
 	end
@@ -62,3 +63,9 @@ class Crawler
 		end
 	end
 end
+
+crawler = Crawler.new(['http://bbc.co.uk'])
+crawler.fetch_data
+p crawler.keywords
+p crawler.urls
+p crawler.text

@@ -25,7 +25,7 @@ describe Crawler do
 
   it "fetches the text within html paragraph tags" do
     crawler.fetch_data
-    expect(crawler.paragraph).to eq("Lorem ipsum dolor sit amet consectetur adipiscing elit Quisque et tortor elementum Nulla ullamcorper interdum nisl a fermentum metus suscipit at")
+    expect(crawler.text).to eq("Lorem ipsum dolor sit amet consectetur adipiscing elit Quisque et tortor elementum Nulla ullamcorper interdum nisl a fermentum metus suscipit at")
   end
 
   it "fetches the description within a html meta tag" do
