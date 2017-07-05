@@ -23,7 +23,7 @@ describe Crawler do
 		expect(crawler.keywords).to eq(['test', 'fake page', 'Search'])
 	end
 
-  xit "fetches the text within html paragraph tags" do
+  it "fetches the text within html paragraph tags" do
     crawler.fetch_data
     expect(crawler.paragraph).to eq("Lorem ipsum dolor sit amet consectetur adipiscing elit Quisque et tortor elementum Nulla ullamcorper interdum nisl a fermentum metus suscipit at")
   end

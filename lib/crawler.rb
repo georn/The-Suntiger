@@ -33,13 +33,13 @@ class Crawler
 	end
 
 		def fetch_paragraphs(seed)
-		paragraphs = []
+		paragraphs = ""
 		seed_paragraph_nodeset = seed.xpath('//p')
 		seed_paragraph_nodeset.each do |node|
-			# p node.text
-			paragraphs << node.text
+			raw_text = node.text.gsub!(/["\n","\t"]/, " ").delete('^A-Za-z ')
+			paragraphs += raw_text
 		end
-		return paragraphs.join("")
+		return paragraphs.split.join(" ")
 	end
 
 	private
