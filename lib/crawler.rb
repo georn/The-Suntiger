@@ -12,9 +12,9 @@ class Crawler
 		@seeds.each do |seed|
 			checked_seed = check_url_or_file(seed)
 			@urls = fetch_urls(checked_seed)
-			@keywords = fetch_keywords(checked_seed)
+			@keywords = fetch_metadata('keywords', checked_seed)
+			@description = fetch_metadata('description',checked_seed)
 			@paragraph = fetch_paragraphs(checked_seed)
-			@description = fetch_description(checked_seed)
 		end
 	end
 
@@ -27,17 +27,12 @@ class Crawler
 		return urls
 	end
 
-	def fetch_keywords(seed)
-		seed_keys_nodeset = seed.xpath('//meta')
-		get_keywords_from_nodeset(seed_keys_nodeset)
+	def fetch_metadata(attribute, seed)
+		meta_from_nodeset = seed.xpath('//meta')
+		get_from_nodeset(attribute, meta_from_nodeset)
 	end
 
-	def fetch_description(seed)
-		seed_keys_nodeset = seed.xpath('//meta')
-		get_description_from_nodeset(seed_keys_nodeset)
-	end
-
-	def fetch_paragraphs(seed)
+		def fetch_paragraphs(seed)
 		paragraphs = []
 		seed_paragraph_nodeset = seed.xpath('//p')
 		seed_paragraph_nodeset.each do |node|
@@ -58,21 +53,12 @@ class Crawler
 		end
 	end
 
-	def get_keywords_from_nodeset(nodeset)
+		def get_from_nodeset(attribute, nodeset)
 		nodeset.each do |node|
 			next unless node.attributes['name']
-				if node.attributes['name'].value == 'keywords'
-					return keywords = node.attributes['content'].value.split(/\s*,\s*/)
-				end
-		end
-	end
-
-	def get_description_from_nodeset(nodeset)
-		nodeset.each do |node|
-			next unless node.attributes['name']
-				if node.attributes['name'].value == 'description'
-					return description = node.attributes['content'].value
-				end
+			output = node.attributes['content'].value
+		 	output = output.split(/\s*,\s*/) if attribute == 'keywords'
+			return output if node.attributes['name'].value == attribute
 		end
 	end
 end

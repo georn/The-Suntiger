@@ -5,7 +5,7 @@ describe Crawler do
   seeds = [ 'file://' + __dir__ + '/fake_page.html']
   let(:crawler) {Crawler.new(seeds)}
 
-  it "exist" do
+  it "exists" do
     expect(crawler).to be_truthy
   end
 
