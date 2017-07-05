@@ -11,5 +11,10 @@ describe PageIndexer do
 
   it "it initializes with a new hash" do
     expect(indexer.page_indexed).to be_empty
+  end
+
+  xit "excludes stop words from content" do
+    content = "and the raven raven never flitting still is sitting still is never sitting"
+    expect(indexer.exclude_stopwords(content)).to eq(["raven", "raven", "flitting", "sitting", "sitting"])
   end 
 end
