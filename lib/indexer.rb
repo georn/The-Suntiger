@@ -1,5 +1,8 @@
 require 'csv'
-require_relative 'pageindexer'
+require_relative 'page_indexer'
+
+class Indexer
+end
 
 filename = 'crawler_results.csv'
 web_search = []
@@ -11,7 +14,9 @@ web_search = File.read(filename).split("\n").map do |row|
   i += 1
   a.unshift(i)
 end
+
 p __LINE__, web_search
+
 def general_indexing(data)
   indexed_all = []
   data.each do |data_line|
@@ -20,4 +25,5 @@ def general_indexing(data)
   end
   indexed_all
 end
+
 p __LINE__, general_indexing(web_search)

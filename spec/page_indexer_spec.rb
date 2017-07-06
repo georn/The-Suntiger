@@ -1,4 +1,4 @@
-require 'indexer'
+# require 'indexer'
 require 'page_indexer'
 
 describe PageIndexer do
