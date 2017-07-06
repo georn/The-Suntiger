@@ -47,4 +47,14 @@ I want the possibility to add URLs to the seed manually
 ```
 
 
+RANKING
 
+```
+Ranking Multiplier
+
+url :         5
+keywords:     4
+description:  3
+headers:      2
+text:         1
+```
