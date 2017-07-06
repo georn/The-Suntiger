@@ -1,5 +1,16 @@
 # search_engine
 
+#### Flow
+
+Crawler: initialises with array of seeds
+
+Index:
+
+Ranking: Each seed gets its own Ranker, where a hash of relevant data and the query is
+put in
+
+Interface:
+
 #### User Stories
 
 EPIC
