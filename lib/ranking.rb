@@ -27,19 +27,19 @@ attr_reader :word_score, :hash
   end
 
 
-  def score
+  def calculate_total_score
     @hash.each do|k,v| 
-      calculate_points(k, v, :url, 5)
-      calculate_points(k, v, :keywords, 4)
-      calculate_points(k, v, :description, 3)
-      calculate_points(k, v, :headers, 2)
-      calculate_points(k, v, :text, 1)
+      calculate_points_attribute(k, v, :url, 5)
+      calculate_points_attribute(k, v, :keywords, 4)
+      calculate_points_attribute(k, v, :description, 3)
+      calculate_points_attribute(k, v, :headers, 2)
+      calculate_points_attribute(k, v, :text, 1)
       end
     end
 
 	private
 
-  def calculate_points(k, v, attribute, points)
+  def calculate_points_attribute(k, v, attribute, points)
     if k == attribute 
         v.each do |key,value|
           @word_score += (points * value) if key.include?(@word)
@@ -49,5 +49,5 @@ attr_reader :word_score, :hash
 end
 
 ranker = Ranker.new(test, "sports")
-ranker.score
+ranker.calculate_total_score
 ranker.word_score

@@ -22,31 +22,31 @@ describe Ranker do
 		
 		it 'calculates points based on url' do
 			ranker = Ranker.new(hash, "a")
-			ranker.score
+			ranker.calculate_total_score
 			expect(ranker.word_score).to eq 5
 		end
 
 		it 'calculates points based on keywords' do
 			ranker = Ranker.new(hash, "b")
-			ranker.score
+			ranker.calculate_total_score
 			expect(ranker.word_score).to eq 8
 		end
 
 		it 'calculates points based on description' do
 			ranker = Ranker.new(hash, "c")
-			ranker.score
+			ranker.calculate_total_score
 			expect(ranker.word_score).to eq 9
 		end
 
 		it 'calculates points based on headers' do
 			ranker = Ranker.new(hash, "d")
-			ranker.score
+			ranker.calculate_total_score
 			expect(ranker.word_score).to eq 8
 		end
 
 		it 'calculates points based on text' do
 			ranker = Ranker.new(hash, "e")
-			ranker.score
+			ranker.calculate_total_score
 			expect(ranker.word_score).to eq 5
 		end
 	end
