@@ -11,8 +11,7 @@ class Crawler
 	end
 
 	def fetch_data
-		File.open('seeddata.csv', 'w') { |f| f.truncate(0) } #empties csv file before writing in 
-
+		create_csv_file
 		@seeds.each do |seed|
 			checked_seed = check_url_or_file(seed)
 
@@ -88,6 +87,13 @@ class Crawler
 			headers_from_one_tag << node.text
 		end
 		return headers_from_one_tag
+	end
+
+	def create_csv_file
+		File.open('seeddata.csv', 'w') { |f| f.truncate(0) } #empties csv file before writing in 
+		CSV.open('seeddata.csv', 'a+', col_sep: "|") do |row|
+			row << ["seed", "urls", "keywords", "description", "headers", "text"]
+		end
 	end
 end
 
