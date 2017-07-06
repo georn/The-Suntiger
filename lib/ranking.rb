@@ -28,21 +28,21 @@ attr_reader :word_score, :hash
 
 
   def calculate_total_score
-    @hash.each do|k,v| 
-      calculate_points_attribute(k, v, :url, 5)
-      calculate_points_attribute(k, v, :keywords, 4)
-      calculate_points_attribute(k, v, :description, 3)
-      calculate_points_attribute(k, v, :headers, 2)
-      calculate_points_attribute(k, v, :text, 1)
+    @hash.each do|key_hash, value_hash| 
+      calculate_points_attribute(key_hash, value_hash, :url, 5)
+      calculate_points_attribute(key_hash, value_hash, :keywords, 4)
+      calculate_points_attribute(key_hash, value_hash, :description, 3)
+      calculate_points_attribute(key_hash, value_hash, :headers, 2)
+      calculate_points_attribute(key_hash, value_hash, :text, 1)
       end
     end
 
 	private
 
-  def calculate_points_attribute(k, v, attribute, points)
-    if k == attribute 
-        v.each do |key,value|
-          @word_score += (points * value) if key.include?(@word)
+  def calculate_points_attribute(key_hash, value_hash, attribute, points)
+    if key_hash == attribute 
+        value_hash.each do |key_attr, value_attr|
+          @word_score += (points * value_attr) if key_attr.include?(@word)
         end
       end
   end
