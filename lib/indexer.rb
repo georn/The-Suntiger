@@ -28,6 +28,7 @@ end
 variable = Indexer.new
 variable.read_csv
 variable.process_webs
+# p variable.web_data.count
 # variable.process_webs
 # p storage
 # filename = 'crawler_results.csv'
