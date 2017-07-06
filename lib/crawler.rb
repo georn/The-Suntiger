@@ -1,21 +1,28 @@
 require 'open-uri'
 require 'nokogiri'
+require 'csv'
+require_relative 'seed_data'
 
 class Crawler
-	attr_reader :seeds, :urls, :keywords, :paragraph, :description, :headers
+	attr_reader :seeds 
 
 	def initialize(seeds)
 		@seeds = seeds
 	end
 
 	def fetch_data
+		create_csv_file
 		@seeds.each do |seed|
 			checked_seed = check_url_or_file(seed)
-			@urls = fetch_urls(checked_seed)
-			@keywords = fetch_metadata('keywords', checked_seed)
-			@description = fetch_metadata('description',checked_seed)
-			@paragraph = fetch_paragraphs(checked_seed)
-			@headers = fetch_headers(checked_seed)
+
+			urls = fetch_urls(checked_seed)
+			keywords = fetch_metadata('keywords', checked_seed)
+			description = fetch_metadata('description',checked_seed)
+			headers = fetch_headers(checked_seed)
+			text = fetch_paragraphs(checked_seed)
+						
+			seed_data = SeedData.new(seed, urls, keywords, description, headers, text)
+			seed_data.store_in_csv
 		end
 	end
 
@@ -33,14 +40,15 @@ class Crawler
 		get_from_nodeset(attribute, meta_from_nodeset)
 	end
 
-	def fetch_paragraphs(seed)
-		paragraphs = ""
+		def fetch_paragraphs(seed)
+		full_text = ""
 		seed_paragraph_nodeset = seed.xpath('//p')
 		seed_paragraph_nodeset.each do |node|
-			raw_text = node.text.gsub!(/[\n\t]/, " ").delete('^A-Za-z ')
-			paragraphs += raw_text
+			raw_text = node.text.delete('^A-Za-z ')
+			raw_text.gsub!(/[\n,\t]/, " ") if raw_text.include?('\n')
+			full_text += "#{raw_text} "
 		end
-		return paragraphs.split.join(" ")
+		return full_text.split.join(" ")
 	end
 
 	def fetch_headers(seed)
@@ -80,4 +88,14 @@ class Crawler
 		end
 		return headers_from_one_tag
 	end
+
+	def create_csv_file
+		File.open('seeddata.csv', 'w') { |f| f.truncate(0) } #empties csv file before writing in 
+		CSV.open('seeddata.csv', 'a+', col_sep: "|") do |row|
+			row << ["seed", "urls", "keywords", "description", "headers", "text"]
+		end
+	end
 end
+
+crawler = Crawler.new(['http://www.bbc.co.uk', 'http://www.makersacademy.com'])
+crawler.fetch_data
