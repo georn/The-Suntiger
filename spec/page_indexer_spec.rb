@@ -1,5 +1,5 @@
 require 'indexer'
-require 'pageindexer'
+require 'page_indexer'
 
 describe PageIndexer do
   csv = [ 'file://' + __dir__ + '/indexer_test.csv']
@@ -21,5 +21,5 @@ describe PageIndexer do
   it "indexes pages content by counting frequency of words with stop words excluded" do
     content = "and the raven raven never flitting still is sitting still is never sitting"
     expect(indexer.indexing(content)).not_to include("never")
-  end 
+  end
 end
