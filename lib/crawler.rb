@@ -20,7 +20,7 @@ class Crawler
 			headers = fetch_headers(checked_seed)
 			text = fetch_paragraphs(checked_seed)
 						
-			seed_data = SeedData.new(urls, keywords, description, headers, text)
+			seed_data = SeedData.new(seed, urls, keywords, description, headers, text)
 			seed_data.store_in_csv
 		end
 	end

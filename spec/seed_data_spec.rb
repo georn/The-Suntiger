@@ -1,7 +1,7 @@
 require 'seed_data'
 
 describe SeedData do
-	let(:seed_data) { SeedData.new('testurl.com', ['testing', 'rspec'], 'testing SeedData here!', 'Extra Extra! Volume of tests take over the country.', 'wow. Much testing, such greens.') }
+	let(:seed_data) { SeedData.new('seedurl.com', 'testurl.com', ['testing', 'rspec'], 'testing SeedData here!', 'Extra Extra! Volume of tests take over the country.', 'wow. Much testing, such greens.') }
 
 	describe 'initializing' do
 		it 'exists' do

@@ -2,7 +2,8 @@ class SeedData
 
 	attr_reader :urls, :keywords, :description, :headers, :text
 
-	def initialize(urls, keywords, description, headers, text)
+	def initialize(seed, urls, keywords, description, headers, text)
+		@seed = seed
 		@urls = urls
 		@keywords = keywords
 		@description = description
@@ -12,7 +13,7 @@ class SeedData
 
 	def store_in_csv(csv_file = 'seeddata.csv')
 		csv_row = CSV.open(csv_file, 'ab') do |row|
-			row << [@urls, @keywords, @description, @text]
+			row << [@seed, @urls, @keywords, @description, @headers, @text]
 		end
 	end
 
