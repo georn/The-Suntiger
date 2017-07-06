@@ -14,6 +14,11 @@ class PageIndexer
     Hash[@page_indexed.sort]
   end
 
+  def process_page(page_id, content)
+    p page_id
+    p content
+  end
+
   private
 
   def exclude_stopwords(content)
