@@ -18,7 +18,7 @@ test = {
   }
 
 class Ranker
-attr_reader :word_score
+attr_reader :word_score, :hash
 
   def initialize(hash, word)
     @hash = hash
@@ -37,14 +37,13 @@ attr_reader :word_score
       end
     end
 
+	private
+
   def calculate_points(k, v, attribute, points)
     if k == attribute 
         v.each do |key,value|
-          p key
           @word_score += (points * value) if key.include?(@word)
         end
-        '-----1-----'
-        p @word_score
       end
   end
 end
