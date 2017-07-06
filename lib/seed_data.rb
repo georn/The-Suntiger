@@ -14,7 +14,7 @@ class SeedData
 	end
 
 	def store_in_csv(csv_file = 'seeddata.csv')
-		csv = CSV.open(csv_file, 'a+', col_sep: "|") do |row|
+		csv = CSV.open(csv_file, 'a+', col_sep: "|", quote_char: "|") do |row|
 			row << [@seed, @urls, @keywords, @description, @headers, @text]
 		end
 	end
