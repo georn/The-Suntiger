@@ -19,7 +19,7 @@ class Indexer
 
   def process_webs
     page = PageIndexer.new
-    (1..@web_data.count).each do |id|
+    (1...@web_data.count).each do |id|
       page.process_page(id, @web_data[id])
     end
   end
@@ -27,7 +27,7 @@ end
 
 variable = Indexer.new
 variable.read_csv
-p variable.web_data
+variable.process_webs
 # variable.process_webs
 # p storage
 # filename = 'crawler_results.csv'
