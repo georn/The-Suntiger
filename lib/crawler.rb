@@ -11,6 +11,8 @@ class Crawler
 	end
 
 	def fetch_data
+		File.open('seeddata.csv', 'w') { |f| f.truncate(0) } #empties csv file before writing in 
+
 		@seeds.each do |seed|
 			checked_seed = check_url_or_file(seed)
 
