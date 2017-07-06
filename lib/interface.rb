@@ -1,3 +1,4 @@
+require 'csv'
 # require_relative 'crawler'
 require_relative 'ranking'
 # require_relative 'pageindexer'
@@ -61,10 +62,11 @@ sorted_list =  list.sort_by do |ranker|
   -ranker.word_score
 end
 
+
 sorted_list.each do |ranker|
-  p ranker.hash
+	CSV.foreach('seeddata.csv', col_sep: "|", quote_char: "|", headers: true) do |row|
+		p row[1] if row[0] == ranker.hash[:id].to_s
+	end
 end
- sorted_list
-p ranker1.word_score
-p ranker2.word_score
+
 

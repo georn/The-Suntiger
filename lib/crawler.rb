@@ -94,7 +94,7 @@ class Crawler
 
 	def create_csv_file
 		File.open('seeddata.csv', 'w') { |f| f.truncate(0) } #empties csv file before writing in 
-		CSV.open('seeddata.csv', 'a+', col_sep: "|") do |row|
+		CSV.open('seeddata.csv', 'a+', col_sep: "|", quote_char: "|") do |row|
 			row << ["id", "seed", "urls", "keywords", "description", "headers", "text"]
 		end
 	end
