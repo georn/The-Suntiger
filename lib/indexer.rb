@@ -12,8 +12,10 @@ class Indexer
   end
 
   def read_csv(filename = DATA_FILE)
-    File.read(filename).split("\n").map do |row|
-      @web_data << row.split(COLUMN_SEPARATOR)
+    # File.read(filename).split("\n").map do |row|
+    #   @web_data << row.split(COLUMN_SEPARATOR)
+    CSV.foreach(DATA_FILE, col_sep: COLUMN_SEPARATOR, quote_char: "|", headers: true) do |row|
+      p row
     end
   end
 
@@ -27,7 +29,7 @@ end
 
 variable = Indexer.new
 variable.read_csv
-variable.process_webs
+# variable.process_webs
 # p variable.web_data.count
 # variable.process_webs
 # p storage
