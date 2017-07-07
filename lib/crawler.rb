@@ -12,16 +12,19 @@ class Crawler
 
 	def fetch_data
 		create_csv_file
+		count = 0
 		@seeds.each do |seed|
+			count += 1
 			checked_seed = check_url_or_file(seed)
 
+			id = count 
 			urls = fetch_urls(checked_seed)
 			keywords = fetch_metadata('keywords', checked_seed)
 			description = fetch_metadata('description',checked_seed)
 			headers = fetch_headers(checked_seed)
 			text = fetch_paragraphs(checked_seed)
 						
-			seed_data = SeedData.new(seed, urls, keywords, description, headers, text)
+			seed_data = SeedData.new(id, seed, urls, keywords, description, headers, text)
 			seed_data.store_in_csv
 		end
 	end
@@ -91,8 +94,8 @@ class Crawler
 
 	def create_csv_file
 		File.open('seeddata.csv', 'w') { |f| f.truncate(0) } #empties csv file before writing in 
-		CSV.open('seeddata.csv', 'a+', col_sep: "|") do |row|
-			row << ["seed", "urls", "keywords", "description", "headers", "text"]
+		CSV.open('seeddata.csv', 'a+', col_sep: "|", quote_char: "|") do |row|
+			row << ["id", "seed", "urls", "keywords", "description", "headers", "text"]
 		end
 	end
 end

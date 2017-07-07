@@ -1,3 +1,4 @@
+require 'csv'
 # require_relative 'crawler'
 require_relative 'ranking'
 # require_relative 'pageindexer'
@@ -40,31 +41,31 @@ test_hash = {
     },
     text: {
       "graduates"=>2, "code"=> 5, "backgrounds"=>4, "diversity"=>3, "career"=> 1, "goal"=> 1
-    }
+   	}
   }
 
-
+#gets input from User
 puts "Enter search keyword"
 query = gets.chomp
-puts "You have entered : " + query
-list = []
+puts "You have entered: " + query
 
+#creates Rankers, stores them in array
 ranker1 = Ranker.new(test_hash, query)
 ranker2 = Ranker.new(test_hash_2, query)
-list << ranker1
-list << ranker2
+list =  [ranker1, ranker2]
 
+#calculates total score for each ranker
 ranker1.calculate_total_score
 ranker2.calculate_total_score
 
+#sorts list (highest score at top)
 sorted_list =  list.sort_by do |ranker|
   -ranker.word_score
 end
 
+#returns info from CSV file relevant to seed in ranker
 sorted_list.each do |ranker|
-  p ranker.hash
+	CSV.foreach('seeddata.csv', col_sep: "|", quote_char: "|", headers: true) do |row|
+		puts "#{row[1]} \n #{row[4]}" if row[0] == ranker.hash[:id].to_s
+	end
 end
- sorted_list
-p ranker1.word_score
-p ranker2.word_score
-
