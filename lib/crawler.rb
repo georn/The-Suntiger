@@ -12,12 +12,12 @@ class Crawler
 
 	def fetch_data
 		create_csv_file
-		i = 0
+		count = 0
 		@seeds.each do |seed|
-			i += 1
+			count += 1
 			checked_seed = check_url_or_file(seed)
 
-			id = i 
+			id = count 
 			urls = fetch_urls(checked_seed)
 			keywords = fetch_metadata('keywords', checked_seed)
 			description = fetch_metadata('description',checked_seed)
