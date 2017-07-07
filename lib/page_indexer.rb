@@ -8,21 +8,22 @@ class PageIndexer
   def initialize(page)
     @page = page
     @page_hash = Hash.new(0)
-    @word_count_hash = Hash.new(0)
   end
 
   def process_page
     CSV_DATA_HEADERS.each_with_index do |csv_header, index|
       @page_hash[csv_header] = indexing_column(@page[index])
     end
-     p @page_hash
+		p @page_hash
   end
 
   def indexing_column(column)
-    exclude_stopwords(column).each do |word|
-      @word_count_hash[word] += 1
+    word_count_hash = Hash.new(0)
+		exclude_stopwords(column).each do |word|
+      word_count_hash[word] += 1
     end
-    Hash[@word_count_hash.sort]
+    Hash[word_count_hash.sort]
+		
   end
 
   private

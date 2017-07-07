@@ -12,8 +12,6 @@ class Indexer
   end
 
   def process_csv(filename = DATA_FILE)
-    # File.read(filename).split("\n").map do |row|
-    #   @web_data << row.split(COLUMN_SEPARATOR)
     CSV.foreach(DATA_FILE, col_sep: COLUMN_SEPARATOR, quote_char: "|", headers: true) do |row|
       page_indexer = PageIndexer.new(row)
       page_indexer.process_page
