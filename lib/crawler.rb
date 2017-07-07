@@ -102,5 +102,5 @@ class Crawler
 	end
 end
 
-crawler = Crawler.new(['http://www.bbc.co.uk', 'http://www.makersacademy.com'])
-crawler.fetch_data
+# crawler = Crawler.new(['https://en.wikipedia.org/wiki/Web_crawler'])
+# crawler.fetch_data

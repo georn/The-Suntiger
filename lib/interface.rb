@@ -3,6 +3,9 @@ require_relative 'crawler'
 require_relative 'ranking'
 require_relative 'indexer'
 
+crawler = Crawler.new(['https://www.makersacademy'])
+crawler.fetch_data
+
 indexer = Indexer.new
 indexer.process_csv
 
@@ -21,12 +24,14 @@ end
 
 #sorts list (highest score at top)
 sorted_list = list.sort_by do |ranker|
-  -ranker.word_score
+  p ranker.hash
+  p '----word score----'
+  p -ranker.word_score
 end
 
 #returns info from CSV file relevant to seed in ranker
 sorted_list.each do |ranker|
 	CSV.foreach('seeddata.csv', col_sep: "|", quote_char: "|", headers: true) do |row|
-		puts "#{row[1]} \n #{row[4]}" if row[0] == ranker.hash[:id].keys[0]
+    puts "#{row[1]} \n #{row[6]}" if row[0] == ranker.hash[:id].keys[0]
 	end
 end
