@@ -1,25 +1,3 @@
-test = { 
-	id: { 
-		"4" => 1
-	},
-  url: {
-      "www.bbc.co.uk"=> 1, "www.bbc.co.uk/sports"=> 2
-    },
-    keywords: {
-      "news"=> 2 , "sports"=> 5
-    },
-    description: {
-      "bbc"=> 5 , "football"=> 7
-    },
-
-    headers: {
-      "fire"=>1, "goal"=>4 
-    },
-    text: {
-      "referee"=>2, "post"=> 5, "water"=>4, "eyes"=>3, "sports"=> 1
-    }
-  }
-
 class Ranker
 attr_reader :word_score, :hash
 
@@ -50,7 +28,3 @@ attr_reader :word_score, :hash
       end
   end
 end
-
-ranker = Ranker.new(test, "sports")
-ranker.calculate_total_score
-ranker.word_score
