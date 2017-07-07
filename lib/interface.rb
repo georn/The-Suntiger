@@ -4,28 +4,31 @@ require_relative 'ranking'
 # require_relative 'pageindexer'
 
 test_hash = { 
-  id: 1,
+  id: { 
+		"1" => 1 
+		},
   url: {
       "www.bbc.co.uk/news"=> 1, "www.bbc.co.uk/sports"=> 2
     },
-    keywords: {
+  keywords: {
       "news"=> 2 , "sports"=> 5
     },
-    description: {
+  description: {
       "bbc"=> 5 , "football"=> 7
     },
-
-    headers: {
+	 headers: {
       "fire"=>1, "goal"=>4 
     },
-    text: {
+   text: {
       "referee"=>2, "post"=> 5, "water"=>4, "eyes"=>3, "sports"=> 1
     }
   }
 
 
   test_hash_2 = {
-  id: 2, 
+  id: {
+	"2" => 1
+	},	
   url: {
       "www.makersacademy.com"=> 1, "www.makersacademy.com/graduates"=> 2
     },
@@ -66,6 +69,6 @@ end
 #returns info from CSV file relevant to seed in ranker
 sorted_list.each do |ranker|
 	CSV.foreach('seeddata.csv', col_sep: "|", quote_char: "|", headers: true) do |row|
-		puts "#{row[1]} \n #{row[4]}" if row[0] == ranker.hash[:id].to_s
+		puts "#{row[1]} \n #{row[4]}" if row[0] == ranker.hash[:id].keys[0]
 	end
 end
