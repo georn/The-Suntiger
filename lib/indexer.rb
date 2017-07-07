@@ -11,24 +11,18 @@ class Indexer
     @web_data = []
   end
 
-  def read_csv(filename = DATA_FILE)
+  def process_csv(filename = DATA_FILE)
     # File.read(filename).split("\n").map do |row|
     #   @web_data << row.split(COLUMN_SEPARATOR)
     CSV.foreach(DATA_FILE, col_sep: COLUMN_SEPARATOR, quote_char: "|", headers: true) do |row|
-      p row
-    end
-  end
-
-  def process_webs
-    page = PageIndexer.new
-    (1...@web_data.count).each do |id|
-      page.process_page(id, @web_data[id])
+      page_indexer = PageIndexer.new(row)
+      page_indexer.process_page
     end
   end
 end
 
 variable = Indexer.new
-variable.read_csv
+variable.process_csv
 # variable.process_webs
 # p variable.web_data.count
 # variable.process_webs
