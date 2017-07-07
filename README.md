@@ -1,8 +1,9 @@
-# search_engine
+# the SunTiger
+### A search engine developed as a week project at Makers Academy
+...
 
-#### Objects
-
-* Crawler: 
+## Objects
+#### Crawler: 
 - initialises with array of seeds
 - fetches data from each seed url
 	- all the urls on the page
@@ -16,7 +17,7 @@
 - saves all data in a CSV file. Each row in the file is a new
   seed
 
-* Indexer:
+#### Indexer:
 - For each seed, removes all the stopwords from data provided
 - Stems the words (e.g. groups together words such as 'fish',
   'fishes', 'fishing', etc.)
@@ -25,27 +26,22 @@
 - includes the index of the seed, to correlate with the data
   in the CSV
 
-* Ranker:
+#### Ranker:
 - Calculates a score when a query word is provided
 - Takes in hash provided by the indexer, plus the query
 - Calculates final score by multiplying the amount of times a
   word is used by a value dependent on where the word is
 found.
-	- Multiplier breakdown:
-			url: 5x
-		 	keywords: 4x
-			description: 3x
-			headers: 2x
-			text: 1x
+	- Multiplier breakdown: see bottom of page
 
-	- Example: query word = "spider"
-		used in keywords: 2
-						description: 1
-						headers: 2
-						text: 6
-		total score: (2 x 4) + (1 x 3) + (2 x 2) + (6 x 1) = 21
+	- Example: query word = "spider". Used in:
+		- keywords: 2
+		- description: 1
+		- headers: 2
+		- text: 6
+		- total score: (2 x 4) + (1 x 3) + (2 x 2) + (6 x 1) = 21
 
-* Interface
+#### Interface
 - Interacts with the user
 - User can give a keyword to search
 - for all seeds a ranker is created
@@ -56,24 +52,15 @@ found.
   rank at the top
 
 
-			
-Index:
-
-Ranking: Each seed gets its own Ranker, where a hash of relevant data and the query is
-put in
-
-Interface:
-
-#### User Stories
-
-EPIC
+## User Stories
+#### EPIC
 ```
 As a Person,
 So I can expand my knowledge,
 I would like to search some websites
 ```
 
-Breakdown
+#### Breakdown
 ```
 As a Person,
 So I can search for a specific topic,
