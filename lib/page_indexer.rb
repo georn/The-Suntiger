@@ -3,7 +3,7 @@ require_relative '../stopwords.rb'
 CSV_DATA_HEADERS = [:id, :seed, :urls, :keywords, :description, :headers, :text]
 
 class PageIndexer
-  attr_reader :page_indexed
+  attr_reader :page_hash
 
   def initialize(page)
     @page = page
