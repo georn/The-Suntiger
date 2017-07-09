@@ -3,7 +3,7 @@ require_relative 'crawler'
 require_relative 'ranking'
 require_relative 'indexer'
 
-crawler = Crawler.new(['https://en.wikipedia.org/wiki/Web_crawler']) #, 'http://www.makersacademy.com'])
+crawler = Crawler.new(['http://bbc.co.uk', 'https://en.wikipedia.org/wiki/Web_crawler', 'http://www.makersacademy.com'])
 crawler.fetch_data
 
 indexer = Indexer.new
