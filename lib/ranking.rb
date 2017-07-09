@@ -10,7 +10,7 @@ attr_reader :word_score, :hash
 
   def calculate_total_score
     @hash.each do|key_hash, value_hash| 
-      calculate_points_attribute(key_hash, value_hash, :url, 5)
+      calculate_points_attribute(key_hash, value_hash, :urls, 5)
       calculate_points_attribute(key_hash, value_hash, :keywords, 4)
       calculate_points_attribute(key_hash, value_hash, :description, 3)
       calculate_points_attribute(key_hash, value_hash, :headers, 2)

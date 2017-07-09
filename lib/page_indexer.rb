@@ -29,7 +29,7 @@ class PageIndexer
 
   def exclude_stopwords(content_section)
     return Hash.new(0) if content_section == '0'
-    clean_section = content_section.downcase.split(' ') - STOPWORDS
+    clean_section = content_section.downcase.scan(/\w+/) - STOPWORDS
     clean_section
   end
 end

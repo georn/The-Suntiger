@@ -24,7 +24,6 @@ end
 
 #sorts list (highest score at top)
 sorted_list = list.sort_by do |ranker|
-  #p ranker.hash
   p '----word score----'
   p -ranker.word_score
 end
