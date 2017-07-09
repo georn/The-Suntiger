@@ -4,7 +4,7 @@ require 'csv'
 require_relative 'seed_data'
 
 class Crawler
-	attr_reader :seeds 
+	attr_reader :seeds
 
 	def initialize(seeds)
 		@seeds = seeds
@@ -22,20 +22,19 @@ class Crawler
 			keywords = fetch_metadata('keywords', checked_seed)
 			description = fetch_metadata('description',checked_seed)
 			headers = fetch_headers(checked_seed)
-			text = fetch_paragraphs(checked_seed)
-						
+			text = fetch_paragraphs(checked_seed)		
 			seed_data = SeedData.new(id, seed, urls, keywords, description, headers, text)
 			seed_data.store_in_csv
 		end
 	end
 
 	def fetch_urls(seed)
-		urls = []
+		urls = ""
 		seed_urls_nodeset = seed.xpath('//a')
 		seed_urls_nodeset.each do |node|
-			urls << node.first[1] if node.first[1].include?('http://')
+			urls += node.first[1] + " " if node.first[1].include?('http') #|| node.first.include?('https://')
 		end
-		return urls
+		return urls.strip
 	end
 
 	def fetch_metadata(attribute, seed)
@@ -55,12 +54,14 @@ class Crawler
 	end
 
 	def fetch_headers(seed)
-		headers = []
+		headers = ""
 		headers_tags = (1..6).map { |num| "h#{num}"}
 		headers_tags.each do |header_tag|
-			headers << get_header_from_tag(seed, header_tag)
+			tag_header = get_header_from_tag(seed, header_tag)
+			headers += tag_header + " " if tag_header
 		end
-		return headers.flatten
+		headers.gsub!(/[^\w ]/, "")
+		return headers.strip
 	end
 
 	private
@@ -78,18 +79,18 @@ class Crawler
 		nodeset.each do |node|
 			next unless node.attributes['name']
 			output = node.attributes['content'].value
-		 	output = output.split(/\s*,\s*/) if attribute == 'keywords'
+			output.gsub!(",", "")
 			return output if node.attributes['name'].value == attribute
 		end
 	end
 
 	def get_header_from_tag(seed , header_tag)
-		headers_from_one_tag = []
+		headers_from_one_tag = ""
 		headers_from_nodeset = seed.xpath("//#{header_tag}")
 		headers_from_nodeset.each do |node|
-			headers_from_one_tag << node.text
+			headers_from_one_tag += node.text + " "
 		end
-		return headers_from_one_tag
+		return headers_from_one_tag.strip if headers_from_one_tag.strip.length > 0
 	end
 
 	def create_csv_file
@@ -100,5 +101,5 @@ class Crawler
 	end
 end
 
-crawler = Crawler.new(['http://www.bbc.co.uk', 'http://www.makersacademy.com'])
+crawler = Crawler.new(['https://en.wikipedia.org/wiki/Web_crawler'])
 crawler.fetch_data

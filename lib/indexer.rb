@@ -1,23 +1,26 @@
 require 'csv'
-require_relative 'pageindexer'
+require_relative 'page_indexer'
 
-filename = 'crawler_results.csv'
-web_search = []
-col_sep = '|'
-i = 0
-Document = Struct.new :id, :url, :keyword, :body
-web_search = File.read(filename).split("\n").map do |row|
-  a = row.split(col_sep)
-  i += 1
-  a.unshift(i)
-end
-p __LINE__, web_search
-def general_indexing(data)
-  indexed_all = []
-  data.each do |data_line|
-    page = PageIndexer.new
-    indexed_all.push(page.indexing(data_line[3]))
+DATA_FILE = 'seeddata.csv'
+COLUMN_SEPARATOR = '|'
+
+class Indexer
+  attr_reader :web_data, :page_hashes
+
+  def initialize
+    @web_data = []
+		@page_hashes = []
   end
-  indexed_all
+
+  def process_csv(filename = DATA_FILE)
+    CSV.foreach(DATA_FILE, col_sep: COLUMN_SEPARATOR, quote_char: "|", headers: true) do |row|
+      page_indexer = PageIndexer.new(row)
+      page_hash = page_indexer.process_page
+			@page_hashes << page_hash
+
+		end
+  end
 end
-p __LINE__, general_indexing(web_search)
+
+variable = Indexer.new
+variable.process_csv

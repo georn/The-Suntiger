@@ -1,25 +1,20 @@
-require 'indexer'
-require 'pageindexer'
+require 'indexer.rb'
 
-describe PageIndexer do
-  csv = [ 'file://' + __dir__ + '/indexer_test.csv']
-  let(:indexer) {PageIndexer.new}
+describe Indexer do
 
-  it "exists" do
-    expect(indexer).to be_truthy
+  let(:indexer) {Indexer.new}
+  let(:file) {double("file")}
+
+  describe 'initializes the indexer' do
+    it 'exists' do
+      expect(indexer).to be_truthy
+    end
   end
 
-  it "it initializes with a new hash" do
-    expect(indexer.page_indexed).to be_empty
+  describe 'reads the seedata file' do
+    xit 'reads a csv file' do
+      allow('file').to receive(:open).with('r')
+      expect(indexer.read_csv).to
+    end
   end
-
-  it "indexes pages content by counting frequency of words" do
-    content = "and the raven raven never flitting still is sitting still is never sitting"
-    expect(indexer.indexing(content)).to eq({"flitting"=>1, "raven"=>2, "sitting"=>2})
-  end
-
-  it "indexes pages content by counting frequency of words with stop words excluded" do
-    content = "and the raven raven never flitting still is sitting still is never sitting"
-    expect(indexer.indexing(content)).not_to include("never")
-  end 
 end
