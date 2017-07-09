@@ -79,7 +79,6 @@ class Crawler
 		nodeset.each do |node|
 			next unless node.attributes['name']
 			output = node.attributes['content'].value
-			# 	output = output.split(/\s*,\s*/) if attribute == 'keywords'
 			output.gsub!(",", "")
 			return output if node.attributes['name'].value == attribute
 		end
