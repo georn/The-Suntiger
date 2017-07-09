@@ -32,7 +32,7 @@ class Crawler
 		urls = ""
 		seed_urls_nodeset = seed.xpath('//a')
 		seed_urls_nodeset.each do |node|
-			urls += node.first[1] + " " if node.first[1].include?('http://')
+			urls += node.first[1] + " " if node.first[1].include?('http') #|| node.first.include?('https://')
 		end
 		return urls.strip
 	end
@@ -102,5 +102,5 @@ class Crawler
 	end
 end
 
-# crawler = Crawler.new(['https://en.wikipedia.org/wiki/Web_crawler'])
-# crawler.fetch_data
+crawler = Crawler.new(['https://en.wikipedia.org/wiki/Web_crawler'])
+crawler.fetch_data
