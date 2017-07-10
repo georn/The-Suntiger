@@ -29,7 +29,7 @@ end
 
 #sorts list (highest score at top)
 sorted_list = list.sort_by do |ranker|
-  -ranker.word_score
+  p -ranker.word_score
 end
 
 #returns info from CSV file relevant to seed in ranker
