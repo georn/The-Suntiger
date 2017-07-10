@@ -29,12 +29,11 @@ class Crawler
 	end
 
 	def fetch_urls(seed)
-		urls = ""
 		seed_urls_nodeset = seed.xpath('//a')
-		seed_urls_nodeset.each do |node|
-			urls += node.first[1] + " " if node.first[1].include?('http') #|| node.first.include?('https://')
+		url_string = seed_urls_nodeset.inject("") do |string, node|
+			string += node.first[1] + " " #if node.first[1].include?('http') 
 		end
-		return urls.strip
+		return url_string.strip
 	end
 
 	def fetch_metadata(attribute, seed)
@@ -43,22 +42,23 @@ class Crawler
 	end
 
 		def fetch_paragraphs(seed)
-		full_text = ""
 		seed_paragraph_nodeset = seed.xpath('//p')
-		seed_paragraph_nodeset.each do |node|
+		full_text = seed_paragraph_nodeset.inject("") do |string, node|
 			raw_text = node.text.delete('^A-Za-z ')
 			raw_text.gsub!(/[\n,\t]/, " ") if raw_text.include?('\n')
-			full_text += "#{raw_text} "
+			string += "#{raw_text} "
 		end
 		return full_text.split.join(" ")
 	end
 
 	def fetch_headers(seed)
-		headers = ""
-		headers_tags = (1..6).map { |num| "h#{num}"}
-		headers_tags.each do |header_tag|
+		header_tags = (1..6).map { |num| "h#{num}"}
+		headers = header_tags.inject("") do |string, header_tag|
 			tag_header = get_header_from_tag(seed, header_tag)
-			headers += tag_header + " " if tag_header
+			if tag_header
+				string += tag_header + " "
+			end
+			string
 		end
 		headers.gsub!(/[^\w ]/, "")
 		return headers.strip
@@ -101,5 +101,5 @@ class Crawler
 	end
 end
 
-crawler = Crawler.new(['https://en.wikipedia.org/wiki/Web_crawler'])
+crawler = Crawler.new(['http://www.bbc.co.uk'])
 crawler.fetch_data

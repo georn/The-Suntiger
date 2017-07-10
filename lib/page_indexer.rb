@@ -14,7 +14,7 @@ class PageIndexer
     CSV_DATA_HEADERS.each_with_index do |csv_header, index|
       @page_hash[csv_header] = indexing_column(@page[index])
     end
-    @page_hash
+   p @page_hash
   end
 
   def indexing_column(column)

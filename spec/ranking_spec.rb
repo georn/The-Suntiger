@@ -1,7 +1,7 @@
 require 'ranking.rb'
 
 describe Ranker do
-	let(:hash) { { url: { "a" => 1 }, keywords: { "b" => 2 }, description: { "c" => 3 }, headers: { "d" => 4 }, text: { "e" => 5 } } }
+	let(:hash) { { urls: { "a" => 1 }, keywords: { "b" => 2 }, description: { "c" => 3 }, headers: { "d" => 4 }, text: { "e" => 5 } } }
 	let(:ranker) { Ranker.new(hash, :d ) }
 
 	describe 'initializing' do
@@ -10,8 +10,7 @@ describe Ranker do
 		end
 		
 		it 'takes in a hash' do
-			expect(ranker.hash).to eq({ url: { "a" => 1 }, keywords: { "b" => 2 }, description: { "c" => 3 }, 
-															 headers: { "d" => 4 }, text: { "e" => 5 } })
+			expect(ranker.hash).to eq({ urls: { "a" => 1 }, keywords: { "b" => 2 }, description: { "c" => 3 }, headers: { "d" => 4 }, text: { "e" => 5 } })
 		end
 	end
 
