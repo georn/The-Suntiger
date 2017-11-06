@@ -1,4 +1,7 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-gem 'rspec'
 gem 'nokogiri'
+
+group :test do
+  gem 'rspec'
+end
