@@ -25,6 +25,24 @@
 
 ```
 
+## Quickstart
+
+Clone the repo, enter the cloned directory and install the dependencies with the following commands:
+```
+git clone git@github.com:georn/search_engine.git
+git cd search_engine
+bundle install
+```
+
+- If you want to run the test:
+```
+rspec spec
+```
+- If you want to run the CLI search engine:
+```
+ruby lib/interface.rb
+```
+
 ## Development
 
 The first couple of days we spent researching about what would imply to build a search engine, investigating about the main algorithms they involved such as the **Crawler**, **Indexer**, **Ranker** and the **Query**. As well as making a choice to which technologies we would use to build it, which we choose Ruby because of the familiarity all the team had.We also spent the afternoon of the first day doing [Mob programming](https://en.wikipedia.org/wiki/Mob_programming) [*spiking*](https://en.wikipedia.org/wiki/Spike_(software_development) some elements of the search engine, so all the team understood the task at hand and thus come with a plan on how to start developing the search engine and our workflow.
@@ -164,7 +182,7 @@ Another challenge is regarding the [Crawler](lib/crawler.rb), it repopulates the
 
 ## Collaborators
 
-This **amazing people** helped in the development of this project!
+This **amazing hard working people** were the team involved in the development of this week project!
 
 - [Rita Sijelmass](https://github.com/RSijelmass)
 - [Aaron Rodrigues](https://github.com/AaronRodrigues)
