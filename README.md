@@ -44,11 +44,11 @@ ruby lib/interface.rb
 ```
 ## Demo
 
-![demo](http://gph.to/2j5Hzgp)
+![demo](https://media.giphy.com/media/xT1R9G558LIGdHO7Vm/giphy.gif)
 
 ## Development
 
-The first couple of days we spent researching about what would imply to build a search engine, investigating about the main algorithms they involved such as the **Crawler**, **Indexer**, **Ranker** and the **Query**. As well as making a choice to which technologies we would use to build it, which we choose Ruby because of the familiarity all the team had.We also spent the afternoon of the first day doing [Mob programming](https://en.wikipedia.org/wiki/Mob_programming) [*spiking*](https://en.wikipedia.org/wiki/Spike_(software_development) some elements of the search engine, so all the team understood the task at hand and thus come with a plan on how to start developing the search engine and our workflow.
+The first couple of days we spent researching about what would imply to build a search engine, investigating about the main algorithms they involved such as the **Crawler**, **Indexer**, **Ranker** and the **Query**. As well as making a choice to which technologies we would use to build it, which we choose Ruby because of the familiarity all the team had.We also spent the afternoon of the first day doing [Mob programming](https://en.wikipedia.org/wiki/Mob_programming) [spiking](https://en.wikipedia.org/wiki/Spike_(software_development) some elements of the search engine, so all the team understood the task at hand and thus come with a plan on how to start developing the search engine and our workflow.
 
 We split all four of us into pairs that would work to build a class each, the [Crawler](lib/crawler.rb) and the [Indexer](lib/indexer.rb) came first, and then the [Ranking](lib/ranking.rb) and the [Interface](lib/interface.rb).We organised our stand-ups every morning to catch up to with the rest of the team and understand struggles that we might work as a team.
 
