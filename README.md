@@ -1,4 +1,4 @@
-# The SunTiger
+# The SunTiger [![Build Status](https://travis-ci.org/georn/The-Suntiger.svg?branch=master)](https://travis-ci.org/georn/The-Suntiger)
 **CLI Search Engine built from scratch developed during a week project at Makers Academy**
 
 ```
