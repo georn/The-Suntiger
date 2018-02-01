@@ -2,3 +2,5 @@
 media
 crawler_reference.rb
 seeddata.csv
+coverage/
+progress/

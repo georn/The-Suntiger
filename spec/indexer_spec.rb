@@ -12,7 +12,7 @@ describe Indexer do
   end
 
   describe 'reads the seedata file' do
-    xit 'reads a csv file' do
+    it 'reads a csv file' do
       allow('file').to receive(:open).with('r')
       expect(indexer.read_csv).to
     end
