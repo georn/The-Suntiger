@@ -17,7 +17,6 @@ class Indexer
       page_indexer = PageIndexer.new(row)
       page_hash = page_indexer.process_page
 			@page_hashes << page_hash
-
 		end
   end
 end
